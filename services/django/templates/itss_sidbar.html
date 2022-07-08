@@ -1,0 +1,46 @@
+
+{% load static %}
+<nav class="navbar-vertical navbar">
+    <div class="nav-scroller">
+        <!-- Brand logo -->
+        <a class="navbar-brand" href="{% url 'dsserver:dashboard' %}">
+            <img src="{% static 'assets/images/brand/logo/logo.svg' %}" alt="" />
+        </a>
+        <!-- Navbar nav -->
+        <ul class="navbar-nav flex-column" id="sideNavbar">
+
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                ATB
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="https://gitlab.atb.com.tn/" target="_blank" class="nav-link">
+                  <i class="far fa-gitlab nav-icon"></i>
+                  <p>Gitlab</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="http://atbmantis01.atb.com.tn/" target="_blank" class="nav-link">
+                  <i class="far fa-calendar nav-icon"></i>
+                  <p>Mantis</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="https://172.29.58.91/" target="_blank" class="nav-link">
+                  <i class="far fa-fire-extinguisher nav-icon"></i>
+                  <p>Walix</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+    </div>
+  </nav>

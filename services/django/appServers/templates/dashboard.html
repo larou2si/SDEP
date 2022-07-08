@@ -1,0 +1,76 @@
+{% extends 'itss_base.html' %}
+{% load static %}
+{% block content %}
+<div id="db-wrapper">
+      <!-- navbar vertical -->
+  {% include 'itss_sidbar.html' %}
+       <!-- Page content -->
+      <div id="page-content">
+
+
+  {% include 'itss_navbar.html' %}
+
+        <!-- Container fluid -->
+        <div class="bg-primary pt-10 pb-21"></div>
+        <div class="container-fluid mt-n22 px-6">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+              <!-- Page header -->
+              <div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="mb-2 mb-lg-0">
+                    <h3 class="mb-0 fw-bold text-white">Welcome {{ user.username }} !</h3>
+                  </div>
+                    <div>
+                    <a href="#" class="btn btn-white">+New Server</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+              {% for project in projects %}
+                {% include 'display_server.html' %}
+              {% endfor %}
+          </div>
+          <!-- row  -->
+
+          <div class="row">
+              <div class="col-lg-12 col-md-12 col-12">
+              <!-- Page header -->
+              <div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="mb-2 mb-lg-0">
+                    <h3 class="mb-0 fw-bold text-white">Documentation: </h3>
+                  </div>
+                  <div>
+                    <a href="#" class="btn btn-white">+New Box</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+                {% include 'box.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</script>
+<script>
+  function pokeMeUp(btn) {
+    var poked = document.getElementById('pk_'+btn.getAttribute('poked'))
+    poked.innerText = parseInt(poked.innerText)+1
+    $.ajax({
+      type: 'GET',
+            url: "",
+            data: {'prf': btn.getAttribute('poked')},
+            async: true,
+            success: function (response) {
+               poked.innerText  = response.pokes;
+            },
+            error: function (req, status, error) {
+                // delete this data from selected inputs !!!
+            },
+    })
+  }
+</script>
+{% endblock content %}
