@@ -8,11 +8,13 @@ docker-compose up -d
 ```
 psql -U <username> -d <dbname> -W
     enter the password
-create table student (id integer primary key, name varchear);
+create table student (id integer primary key, name varchar);
+create table course (id integer primary key, name varchar);
 ```
 ## until debezium work correctly, we should modify the table
 ```
 ALTER TABLE public.student REPLICA IDENTITY FULL;
+ALTER TABLE public.course REPLICA IDENTITY FULL;
 ```
 ## set up the debezium connector to this table, we need to create a json file which contains the configuration
 ### in the terminal run this cmd to set the config
@@ -22,15 +24,26 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 
 ### set the kafka topic to listen on our debezium connector (run it again, if you encounter this error: 'Broker: Leader not available')
 ```
-docker-compose run --tty \
+docker run --tty \
     --network debezium_cdc_default \
     confluentinc/cp-kafkacat \
     kafkacat -b kafka:9092 -C \
     -s key=s -s value=avro \
-    -r http://schema-registry:8001 \
+    -r http://schema-registry:8081 \
     -t postgres.public.student
+# another terminal:
+
+docker run --tty \
+    --network debezium_cdc_default \
+    confluentinc/cp-kafkacat \
+    kafkacat -b kafka:9092 -C \
+    -s key=s -s value=avro \
+    -r http://schema-registry:8081 \
+    -t postgres.public.course
 ```
 
 ### and now insert some rows in  the DB to capture the events :)
-
-# ERROR: Failed to format message in postgres.public.student [0] at offset 0: Avro/Schema-registry message deserialization: REST request failed (code -1): HTTP request failed: Couldn't connect to server : terminating
+```
+insert into student (id,name) values (1, 'karim');
+insert into course (id,name) values (1, 'Emotional Intelligence');
+```
