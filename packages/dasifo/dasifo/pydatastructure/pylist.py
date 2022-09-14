@@ -1,5 +1,3 @@
-from logging.config import valid_ident
-from pickletools import pylist
 from . import PyList
 
 class LinkedList(PyList):
@@ -23,6 +21,9 @@ class LinkedList(PyList):
         return l
 
     def removeNthFromEnd(self, n:int):
+        """
+        see the description: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+        """
         if not self.next and n==1: return None
         l = self.lenght
         if l == n-1:
@@ -36,6 +37,19 @@ class LinkedList(PyList):
                 break
             h = h.next
             i += 1
+        """ fastest solution on leetcode submissions
+        dummy = ListNode(0, head)
+        slow = dummy
+        fast = head
+        while n > 0:
+            fast = fast.next
+            n -= 1
+        while fast:
+            slow = slow.next
+            fast = fast.next
+        slow.next = slow.next.next
+        return dummy.next
+        """
 
 class DoublyLinkedList(PyList):
     def __init__(self) -> None:
