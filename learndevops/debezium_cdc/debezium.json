@@ -9,6 +9,6 @@
       "database.password": "docker",
       "database.dbname": "exampledb",
       "database.server.name": "postgres",
-      "table.include.list": "public.student"
+      "table.include.list": "public.student,public.course"
     }
   }
